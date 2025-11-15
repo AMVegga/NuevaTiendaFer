@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Productos - Style and more</title>
+    <link rel="stylesheet" href="stylesadmin.css">
+</head>
+<body>
+
+   <header style="text-align: center;">
+  <h1>Nuestros Productos</h1>
+
+  <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 2%;">
+    <span><button class="button2"><strong><a href="index.html">Volver al inicio</a></strong></button></span>
+    <span><input type="text" id="buscador2" placeholder="Buscar" onkeyup="buscarProductos2()"></span>
+    <span><button class="button2"><strong><a href="carrito.html">🛒 Mi pedido (<span id="contador-carrito">0</span>)</a></strong></button></span>
+    <span><section style="text-align: center;">
+        <a href="https://wa.me/+51952208427?text=Hola,%20quiero%20comprar%20este%20producto" class="whatsapp" target="_blank">
+            <img style="width: 20px; height: 20px;" src="./whatsapp.png" alt=""> Pagar por WhatsApp
+        </a>
+    </section></span>
+  </div>
+</header>
+
+    
+    <main>    
+     
+    <!-- Sección de productos -->
+    <div id="products-section">
+          <h2 class="section-title">Productos destacados</h2>         
+          <div class="card-grid" id="catalogo-productos"></div>
+        </div>  
+   
+    
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <a href="https://wa.me/+51952208427" target="_blank" class="btn-whatsapp">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" />
+        <span class="tooltip">Contáctanos</span>
+      </a>
+
+    </main>
+
+    <footer>
+        <p>&copy; Style and more - Todos los derechos reservados</p>
+    </footer>            
+    
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+        <script src="script2.js"></script>
+
+</body>
+</html>

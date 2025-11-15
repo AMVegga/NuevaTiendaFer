@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Style and more</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">SM</div>
+        <div>
+          <div class="title">Style and more</div>
+          <div class="subtitle">Ropa de marca · Lives · Pagos con Yape</div>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-btn"><a href="index.html">Inicio</a></button>                         
+        <button class="nav-btn"><a href="admin.html">Administrador</a></button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section>
+        <div>
+          <div class="live-section" id="liveSection">
+          <h3 class="section-title">Live en vivo</h3>
+          <div class="live-grid">
+            <iframe id="liveFrame" class="stream"
+              src="https://www.youtube.com/embed/live_stream?channel=UCXXXXXXXXXXXXX"
+              allowfullscreen></iframe>
+
+            <div class="stream-controls">
+              <button class="btn-primary" id="btn-open-live">Abrir live en ventana completa</button>
+              <script>
+            document.getElementById("btn-open-live").addEventListener("click", () => {
+            window.open("https://tu-url-del-live.com", "_blank", "width=800,height=600");
+            });
+              </script>
+              <div class="live-info">
+                <h4>Puedes hacer tu pedido durante el live</h4>
+                <p>Selecciona productos y procesa el pago sin salir del stream.</p>
+              </div>
+            </div>
+          </div>
+        </div>                         
+      </section>     
+
+      <aside>
+        <div class="cart-title">
+          <div class="cart-text">Tu carrito</div>
+          <div id="contador-carrito" class="cart-count">0</div>
+        </div>
+        <div class="cart-list" id="lista-carrito"></div>
+
+        <div class="checkout-box">
+          <div class="total">Total: <span id="total">$0.00</span></div>
+          <div id="paypal-button-container"></div>
+          <button id="vaciar-carrito" class="nav-btn">Vaciar carrito</button>
+        </div>
+
+        <div class="order-section">
+          <h4>Realizar pedido (info)</h4>
+          <form id="orderForm" class="order-form" onsubmit="return false;">
+            <input placeholder="Nombre" id="custName" required />
+            <input placeholder="Ciudad" id="custCity" required />
+            <input placeholder="Dirección" id="custAddress" required />
+            <input placeholder="Teléfono / WhatsApp" id="custPhone" required />
+            <textarea placeholder="Nota para el vendedor" id="custNotes" rows="2"></textarea>            
+           
+            <button type="button" class="btn-whatsapp" id="btn-whatsapp">Enviar pedido por WhatsApp</button>
+            <div id="orderMsg" class="feedback"></div>
+          </form>
+        </div>
+      </aside>
+    </main>
+  </div>
+  
+  <section>
+     <div id="products-section">
+          <h2 class="section-title">Productos destacados</h2>
+
+          <div style="display: flex; padding: 10px; justify-content: left; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 2%;">
+        <span><input type="text" id="buscador2" placeholder="Buscar" onkeyup="buscarProductos2()"></span>    
+  </div>          
+        </div>
+        <div class="card-grid" id="catalogo-productos"></div> 
+        </section>
+
+ <!-- Carga la librería de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- Inicializa tu conexión a Supabase -->
+  <script>
+    const supabase = window.supabase.createClient(
+      'https://gmvkmikuafewtenendsm.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtdmttaWt1YWZld3RlbmVuZHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMzExNjgsImV4cCI6MjA3NzYwNzE2OH0.uskKXf-8OZDj_DYzy39u5R8QBrUghUklrXVDPU4-Jwo'
+    );
+  </script>
+  <script src="script2.js"></script>
+</body>
+<footer></footer>
+</html>

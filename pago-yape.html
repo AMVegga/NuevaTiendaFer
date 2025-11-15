@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagar con Yape</title>
+  <link rel="stylesheet" href="estilos-yape.css">
+</head>
+<body>
+  <h1>Paga con Yape</h1>
+
+  <div class="qr-container">
+    <label for="producto">Selecciona tu producto:</label>
+    <select id="producto">
+      <option value="25">Camiseta - S/25.00</option>
+      <option value="40">Gorra - S/40.00</option>
+      <option value="60">Mochila - S/60.00</option>
+    </select>
+
+    <p>Escanea este código con tu app Yape:</p>
+    <img src="qr-yape.png" alt="Código QR de Yape">
+    <p id="monto">Monto: <strong>S/25.00</strong></p>
+
+    <button id="confirmarPago">Ya pagué</button>
+  </div>
+
+  <script>
+    const selector = document.getElementById("producto");
+    const monto = document.getElementById("monto");
+    const boton = document.getElementById("confirmarPago");
+
+    selector.addEventListener("change", () => {
+      const valor = selector.value;
+      monto.innerHTML = `Monto: <strong>S/${valor}.00</strong>`;
+    });
+
+    boton.addEventListener("click", () => {
+      const valor = selector.value;
+      alert(`Gracias. Has pagado S/${valor}.00 — tu pago será verificado.`);
+    });
+  </script>
+</body>
+</html>
+

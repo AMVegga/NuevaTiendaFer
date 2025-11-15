@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesadmin.css" />
+  <script>
+    if (prompt("Introduce la contraseña:") !== "fer") {
+      alert("Acceso denegado");
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>Gestión de productos</h1>
+    <div><a href="index.html" class="btn-volver">← Volver al inicio</a></div>    
+  </header>      
+
+  <main class="admin-main">
+
+    <section class="form-section">
+      <h2>Agregar o Editar Producto</h2>
+      <form id="form-producto" class="form-grid">
+        <input type="hidden" id="producto-id" />
+
+        <input type="text" id="nombre" placeholder="Nombre del producto" required />
+        <textarea id="descripcion" placeholder="Descripción" class="textarea"></textarea>
+      <div class="fila-inputs">
+        <input type="number" id="precio" placeholder="Precio" step="0.01" required />
+        <input type="file" id="imagen" accept="image/*" />
+      </div>
+        <div class="form-actions">
+          <button type="submit">Guardar producto</button>
+          <button type="button" id="cancelar" style="display: none;">Cancelar</button>
+        </div>
+      </form>
+      <p id="resultado"></p>
+    </section>
+
+    <section class="productos-lista">
+      <h2>Lista de Productos</h2>
+      <div id="productGrid" class="card-grid"></div>
+    </section>
+
+  </main>
+
+   <!-- LÓGICA -->
+
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+   <script>
+    const supabase = window.supabase.createClient(
+      'https://gmvkmikuafewtenendsm.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtdmttaWt1YWZld3RlbmVuZHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMzExNjgsImV4cCI6MjA3NzYwNzE2OH0.uskKXf-8OZDj_DYzy39u5R8QBrUghUklrXVDPU4-Jwo'
+    );
+   
+    const client = supabase;
+
+    // 📦 Variables de DOM
+    const form = document.getElementById('form-producto');
+    const resultado = document.getElementById('resultado');
+    const productosDiv = document.getElementById('productGrid');
+    productosDiv.style.display = "grid";
+    productosDiv.style.gridTemplateColumns = "repeat(auto-fill, minmax(250px, 1fr))";
+    productosDiv.style.gap = "20px";
+    const cancelarBtn = document.getElementById('cancelar');
+
+    // 📥 Cargar productos
+    async function cargarProductos() {
+      const { data, error } = await supabase
+        .from('productos')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        console.error('Error cargando productos:', error);
+      } else {
+        mostrarProductos(data);
+      }
+    }
+
+    // 🧾 Mostrar lista
+    function mostrarProductos(lista) {
+      productosDiv.innerHTML = '';
+      lista.forEach(producto => {
+        productosDiv.innerHTML += `        
+          <div style="margin-bottom: 20px; border-bottom:1px solid #ccc; padding-bottom:10px">
+            <h3>${producto.nombre}</h3>
+            <p>${producto.descripcion}</p>
+            <strong>S/.${producto.precio}</strong><br>
+            ${producto.imagen_url ? `<img src="${producto.imagen_url}" width="180"; height="250"><br>` : ''}
+            <button onclick="editarProducto('${producto.id}')">Editar</button>
+            <button onclick="eliminarProducto('${producto.id}')">Eliminar</button>
+          </div>          
+        `;
+      });
+    }
+
+    // ✏️ Editar producto
+    window.editarProducto = async function(id) {
+      const { data } = await supabase
+        .from('productos')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      document.getElementById('producto-id').value = data.id;
+      document.getElementById('nombre').value = data.nombre;
+      document.getElementById('descripcion').value = data.descripcion;
+      document.getElementById('precio').value = data.precio;
+      cancelarBtn.style.display = 'inline';
+    }
+
+    // 🗑 Eliminar producto
+    window.eliminarProducto = async function(id) {
+      if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
+
+      const { error } = await supabase
+        .from('productos')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Error al eliminar: ' + error.message);
+      } else {
+        cargarProductos();
+      }
+    }
+
+    // 🧹 Cancelar edición
+    cancelarBtn.addEventListener('click', () => {
+      form.reset();
+      document.getElementById('producto-id').value = '';
+      cancelarBtn.style.display = 'none';
+      resultado.textContent = '';
+    });
+
+    // 💾 Guardar producto
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const id = document.getElementById('producto-id').value;
+      const nombre = document.getElementById('nombre').value;
+      const descripcion = document.getElementById('descripcion').value;
+      const precio = parseFloat(document.getElementById('precio').value);
+      const imagenFile = document.getElementById('imagen').files[0];
+      let imagen_url = null;
+
+      if (imagenFile) {
+        const filePath = `${Date.now()}-${imagenFile.name}`;
+        const { error: uploadError } = await supabase
+          .storage
+          .from('imagenes-productos')
+          .upload(filePath, imagenFile);
+
+        if (uploadError) {
+          resultado.textContent = 'Error al subir imagen: ' + uploadError.message;
+          resultado.style.color = 'red';
+          return;
+        }
+
+        const { data: publicUrlData } = supabase
+          .storage
+          .from('imagenes-productos')
+          .getPublicUrl(filePath);
+
+        imagen_url = publicUrlData.publicUrl;
+      }
+
+      let insertData = { nombre, descripcion, precio };
+      if (imagen_url) insertData.imagen_url = imagen_url;
+
+      if (id) {
+        const { error } = await supabase
+          .from('productos')
+          .update(insertData)
+          .eq('id', id);
+
+        if (error) {
+          resultado.textContent = 'Error al actualizar: ' + error.message;
+          resultado.style.color = 'red';
+          return;
+        }
+
+        resultado.textContent = 'Producto actualizado.';
+        resultado.style.color = 'green';
+      } else {
+        const { data, error } = await supabase
+          .from('productos')
+          .insert([insertData]);
+
+        if (error) {
+          resultado.textContent = 'Error al agregar: ' + error.message;
+          resultado.style.color = 'red';
+          return;
+        }
+
+        resultado.textContent = 'Producto agregado.';
+        resultado.style.color = 'green';
+      }
+
+      form.reset();
+      document.getElementById('producto-id').value = '';
+      cancelarBtn.style.display = 'none';
+      cargarProductos();
+    });
+
+    cargarProductos();
+   
+  </script>
+  <script src="script2.js"></script>
+
+</body>
+</html>
