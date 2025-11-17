@@ -12,8 +12,10 @@
   <div class="container">
     <header>
       <div class="brand">
-        <div class="logo">SM</div>
-        <div>
+        <div class="logo">
+          <img style="width: 40px; height: 40px; border-radius: 15%;" src="logo.jpeg" alt="">
+        </div>
+        <div style="padding: 10px;">
           <div class="title">Style and more</div>
           <div class="subtitle">Ropa de marca · Lives · Pagos con Yape</div>
         </div>
@@ -31,14 +33,14 @@
           <h3 class="section-title">Live en vivo</h3>
           <div class="live-grid">
             <iframe id="liveFrame" class="stream"
-              src="https://www.youtube.com/embed/live_stream?channel=UCXXXXXXXXXXXXX"
+              src="https://www.youtube.com/embed/live_stream?channel=UCDuoKGrLvtim8L6zaM1bQow/posts?pvf=CAI%253D"
               allowfullscreen></iframe>
 
             <div class="stream-controls">
               <button class="btn-primary" id="btn-open-live">Abrir live en ventana completa</button>
               <script>
             document.getElementById("btn-open-live").addEventListener("click", () => {
-            window.open("https://tu-url-del-live.com", "_blank", "width=800,height=600");
+            window.open("https://www.youtube.com/@Fher-wp3qy/live", "_blank", "width=800,height=600");
             });
               </script>
               <div class="live-info">
@@ -47,12 +49,22 @@
               </div>
             </div>
           </div>
-        </div>                         
+        </div>
+        <section>
+     <div id="products-section">
+          <h2 class="section-title">Productos destacados</h2>
+
+          <div style="display: flex; padding: 10px; justify-content: left; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 2%;">
+        <span><input type="text" id="buscador2" placeholder="Buscar" onkeyup="buscarProductos2()"></span>    
+  </div>          
+        </div>
+        <div class="card-grid" id="catalogo-productos"></div> 
+        </section>                         
       </section>     
 
       <aside>
         <div class="cart-title">
-          <div class="cart-text">Tu carrito</div>
+          <div class="cart-text">Tu pedido</div>
           <div id="contador-carrito" class="cart-count">0</div>
         </div>
         <div class="cart-list" id="lista-carrito"></div>
@@ -60,7 +72,7 @@
         <div class="checkout-box">
           <div class="total">Total: <span id="total">$0.00</span></div>
           <div id="paypal-button-container"></div>
-          <button id="vaciar-carrito" class="nav-btn">Vaciar carrito</button>
+          <button id="vaciar-carrito" class="nav-btn">Vaciar pedido</button>
         </div>
 
         <div class="order-section">
@@ -78,18 +90,7 @@
         </div>
       </aside>
     </main>
-  </div>
-  
-  <section>
-     <div id="products-section">
-          <h2 class="section-title">Productos destacados</h2>
-
-          <div style="display: flex; padding: 10px; justify-content: left; align-items: center; gap: 20px; flex-wrap: wrap; padding-top: 2%;">
-        <span><input type="text" id="buscador2" placeholder="Buscar" onkeyup="buscarProductos2()"></span>    
-  </div>          
-        </div>
-        <div class="card-grid" id="catalogo-productos"></div> 
-        </section>
+  </div>   
 
  <!-- Carga la librería de Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>

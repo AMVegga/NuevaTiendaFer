@@ -14,14 +14,14 @@
 </head>
 <body>
 
-  <header class="admin-header">
-    <h1>Gestión de productos</h1>
-    <div><a href="index.html" class="btn-volver">← Volver al inicio</a></div>    
+  <header style="height: 10px; padding: 0;" class="brand">
+    <h1 style="padding: 40px;">Gestión de productos</h1>
+    <div><a href="index.html" class="btn-primary">← Volver al inicio</a></div>    
   </header>      
 
   <main class="admin-main">
 
-    <section class="form-section">
+    <section class="order-form">
       <h2>Agregar o Editar Producto</h2>
       <form id="form-producto" class="form-grid">
         <input type="hidden" id="producto-id" />
@@ -33,7 +33,7 @@
         <input type="file" id="imagen" accept="image/*" />
       </div>
         <div class="form-actions">
-          <button type="submit">Guardar producto</button>
+          <button class="btn-primary" type="submit">Guardar producto</button>
           <button type="button" id="cancelar" style="display: none;">Cancelar</button>
         </div>
       </form>
@@ -47,7 +47,7 @@
 
   </main>
 
-   <!-- LÓGICA -->
+   <!-------------------------------- LÓGICA ----------------------------------------->
 
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 

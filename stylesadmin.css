@@ -99,6 +99,12 @@ header {
   padding: 0;
 }
 
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+
 .fila-inputs {
   display: flex;
   gap: 15px; /* espacio entre inputs */
@@ -625,6 +631,21 @@ a {
     box-shadow: 0 0 15px #00bfff;
 }
 
+.btn-primary{
+  background:transparent;
+  border:2px solid rgba(255,255,255,0.06);
+  color:white;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer
+}
+
+.btn-primary:hover{
+  background: #1767c7;
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(39,115,201,0.12)
+}
+
 .contacto-encabezado {
   padding: 30px 20px;
   text-align: center;
@@ -725,8 +746,23 @@ a {
   margin: auto;
 }
 
+.order-form{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:15px 
+}
+
+input,textarea{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);
+  padding:10px;
+  border-radius:8px;
+  color:#eaf6ff
+}
+
 .form-section {
-  background: #111;
+  background: linear-gradient(180deg,#071024 0%,hsl(214, 67%, 18%) 55%,#07213a 100%);
   color: white;
   padding: 30px;
   border-radius: 15px;
@@ -745,7 +781,7 @@ a {
   padding: 10px;
   border: 1px solid #444;
   border-radius: 8px;
-  background: #222;
+  background: transparent;
   color: white;
   width: 100%;
   font-size: 1rem;
